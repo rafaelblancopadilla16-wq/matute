@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8 de diciembre de 2015 — El tiroteo de Montalbán</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#050607;color:#eee;
+ font-family:Arial,sans-serif;
+ display:flex;justify-content:center;align-items:center;
+ min-height:100vh;overflow:hidden
+}
+#documental{
+ width:min(100vw,177.777vh);
+ aspect-ratio:16/9;
+ background:#080a0d;position:relative;overflow:hidden;
+ box-shadow:0 0 80px #000
+}
+.escena{
+ position:absolute;inset:0;opacity:0;
+ visibility:hidden;transition:opacity 1.5s;
+ overflow:hidden;background:#111820
+}
+.escena.activa{opacity:1;visibility:visible}
+.fondo{
+ position:absolute;inset:-5%;
+ background:linear-gradient(145deg,#303b40,#101619 70%);
+ animation:camara 18s ease-in-out infinite alternate
+}
+@keyframes camara{
+ from{transform:scale(1)}
+ to{transform:scale(1.13) translate(-1%,1%)}
+}
+.escena:after{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(transparent 45%,#000c 100%),
+ radial-gradient(ellipse,transparent 45%,#0009)
+}
+.grano{
+ position:absolute;inset:0;z-index:5;pointer-events:none;
+ opacity:.12;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")
+}
+.centro{
+ position:absolute;z-index:6;inset:0;
+ display:flex;align-items:center;justify-content:center;
+ flex-direction:column;text-align:center;padding:8%
+}
+.inferior{
+ position:absolute;z-index:6;left:8%;right:8%;bottom:19%
+}
+.etiqueta{
+ color:#c6ad7b;letter-spacing:4px;
+ font-size:clamp(10px,1vw,17px);
+ text-transform:uppercase
+}
+h1{
+ font-family:Georgia,serif;font-weight:normal;
+ font-size:clamp(30px,4.5vw,82px);
+ line-height:1.08;text-transform:uppercase;
+ text-shadow:0 3px 25px black
+}
+p{
+ font-family:Georgia,serif;
+ font-size:clamp(15px,1.6vw,28px);
+ line-height:1.5;color:#deded9;
+ max-width:900px
+}
+.linea{height:2px;width:85px;background:#a63a35;margin:25px auto}
+.texto-alerta{
+ font-family:Arial,sans-serif;font-weight:bold;
+ font-size:clamp(14px,1.7vw,30px);
+ color:#e5c6bd;letter-spacing:1px
+}
+#cabecera{
+ position:absolute;z-index:10;top:22px;left:3%;
+ font-size:11px;letter-spacing:3px;color:#c5c5c0
+}
+#aviso{
+ position:absolute;z-index:10;top:22px;right:3%;
+ font-size:10px;color:#aaa;letter-spacing:1px
+}
+#subtitulos{
+ position:absolute;z-index:12;bottom:15%;
+ left:12%;right:12%;text-align:center;
+ font-size:clamp(13px,1.25vw,22px);
+ line-height:1.5;text-shadow:0 2px 8px black;
+}
+.controles{
+ position:absolute;z-index:20;bottom:0;left:0;right:0;
+ display:flex;align-items:center;gap:12px;
+ padding:20px 3%;background:linear-gradient(transparent,#000f)
+}
+button{
+ background:#16191c;color:#eee;
+ border:1px solid #777;padding:10px 14px;
+ cursor:pointer;font-size:11px;letter-spacing:1px
+}
+button:hover{background:#9c3732}
+#progreso{flex:1;accent-color:#a63a35}
+#volumen{width:75px;accent-color:#a63a35}
+.tiempo{font:12px monospace;color:#bbb;white-space:nowrap}
+
+/* Recreación de calle */
+.calle{
+ position:absolute;inset:0;
+ background:linear-gradient(#39444a,#252e32 55%,#17191b)
+}
+.edificio{
+ position:absolute;bottom:35%;height:53%;
+ background:linear-gradient(90deg,#544b40,#8b7a67,#50463b);
+ border-top:9px solid #38312a;
+ box-shadow:inset -15px 0 #0004
+}
+.edificio:before{
+ content:"";position:absolute;top:17%;left:12%;
+ width:24%;height:26%;background:#172126;
+ border:7px solid #b3a087;
+ box-shadow:100px 0 0 -7px #172126,100px 0 0 0 #b3a087
+}
+.edificio:after{
+ content:"";position:absolute;bottom:0;left:40%;
+ width:23%;height:44%;background:#211d19;
+ border:7px solid #a08c72
+}
+.e1{left:0;width:31%;height:48%}
+.e2{left:32%;width:34%;height:58%}
+.e3{right:0;width:31%;height:50%}
+.asfalto{
+ position:absolute;bottom:0;width:100%;height:36%;
+ background:linear-gradient(#363638,#141618)
+}
+.agente{
+ position:absolute;bottom:27%;width:3%;height:20%;
+ z-index:3;animation:caminar 3s ease-in-out infinite alternate
+}
+.agente:before{
+ content:"";position:absolute;top:0;left:25%;
+ width:50%;aspect-ratio:1;border-radius:50%;
+ background:#b99b7e
+}
+.agente:after{
+ content:"";position:absolute;top:24%;left:5%;
+ width:90%;height:65%;background:#263d49;
+ border-radius:5px;
+ box-shadow:-8px 70px 0 -3px #17191a,
+ 8px 70px 0 -3px #17191a
+}
+.a1{left:39%}
+.a2{left:46%;animation-delay:.5s}
+@keyframes caminar{to{transform:translateX(17px)}}
+
+/* Vivienda acordonada */
+.casa{
+ position:absolute;left:29%;top:28%;width:42%;height:53%;
+ background:linear-gradient(90deg,#665b4e,#95836d,#51483d);
+ border-top:10px solid #3a332c;
+ box-shadow:0 25px 50px #000
+}
+.casa:before{
+ content:"";position:absolute;left:12%;top:18%;
+ width:24%;height:25%;background:#192328;
+ border:7px solid #b5a38b;
+ box-shadow:210px 0 0 -7px #192328,210px 0 0 0 #b5a38b
+}
+.casa:after{
+ content:"";position:absolute;left:41%;bottom:0;
+ width:22%;height:47%;background:#1d1b18;
+ border:7px solid #a18e75
+}
+.techo{
+ position:absolute;left:25%;top:12%;width:50%;height:22%;
+ background:#292a29;
+ clip-path:polygon(0 100%,12% 20%,88% 20%,100% 100%)
+}
+.barrera{
+ position:absolute;bottom:19%;left:6%;right:6%;
+ border-top:6px solid #b5ad9e;
+ border-bottom:6px solid #b5ad9e;
+ transform:skewY(-2deg)
+}
+.destellos{
+ position:absolute;inset:0;pointer-events:none;
+ background:
+ radial-gradient(ellipse at 15% 75%,#a020203b,transparent 35%),
+ radial-gradient(ellipse at 85% 75%,#17467b40,transparent 35%);
+ animation:policia 1.8s infinite alternate
+}
+@keyframes policia{
+ from{opacity:.2}to{opacity:1}
+}
+#mapa{
+ width:100%;height:100%;
+ background:radial-gradient(#34434a,#11191d);
+ display:flex;align-items:center;justify-content:center
+}
+#mapa svg{
+ width:85%;height:90%;
+ animation:zoomMapa 12s ease forwards
+}
+@keyframes zoomMapa{
+ from{transform:scale(1)}
+ to{transform:scale(2.4)}
+}
+.mapa-texto{
+ fill:#eee;font-size:22px;letter-spacing:4px
+}
+</style>
+</head>
+
+<body>
+<div id="documental">
+
+<div id="cabecera">RECONSTRUCCIÓN DOCUMENTAL</div>
+<div id="aviso">IMÁGENES RECREADAS · NO ARCHIVO REAL</div>
+
+<!-- ESCENA 1 -->
+<section class="escena activa" data-duration="9000">
+ <div class="centro">
+  <div class="etiqueta">Reconstrucción documental</div>
+  <div class="linea"></div>
+  <h1>8 de diciembre<br>de 2015</h1>
+  <div class="etiqueta">Montalbán de Córdoba · Andalucía</div>
+ </div>
+</section>
+
+<!-- ESCENA 2 -->
+<section class="escena" data-duration="10000">
+ <div id="mapa">
+  <svg viewBox="0 0 900 550">
+   <path d="M130 100 L250 65 330 100 420 80
+   510 130 610 115 700 170 760 260
+   720 330 760 390 680 460 570 470
+   490 510 390 475 300 500 230 420
+   150 390 100 280Z"
+   fill="#58675c" stroke="#aeb49d" stroke-width="4"/>
+   <path d="M180 210 Q350 140 470 230
+   T730 300 M150 350 Q400 280 700 410"
+   fill="none" stroke="#c2bba0" stroke-width="3"/>
+   <text x="350" y="280" class="mapa-texto">ANDALUCÍA</text>
+   <circle cx="530" cy="360" r="10" fill="#b94b43"/>
+   <circle cx="530" cy="360" r="28" fill="none"
+   stroke="#d58d79" stroke-width="3">
+    <animate attributeName="r" values="12;45;12"
+    dur="3s" repeatCount="indefinite"/>
+   </circle>
+   <text x="550" y="350" class="mapa-texto"
+   style="font-size:15px">MONTALBÁN</text>
+  </svg>
+ </div>
+ <div class="inferior">
+  <div class="etiqueta">Provincia de Córdoba · Campiña Sur</div>
+  <h1>Un municipio.<br>Una jornada que cambió.</h1>
+ </div>
+</section>
+
+<!-- ESCENA 3 -->
+<section class="escena" data-duration="15000">
+ <div class="fondo calle">
+  <div class="edificio e1"></div>
+  <div class="edificio e2"></div>
+  <div class="edificio e3"></div>
+  <div class="asfalto"></div>
+  <div class="agente a1"></div>
+  <div class="agente a2"></div>
+ </div>
+ <div class="inferior">
+  <div class="etiqueta">Calle Ancha · 8 de diciembre de 2015</div>
+  <h1>Los primeros<br>momentos</h1>
+  <p>Dos agentes de la Guardia Civil se dirigen a una vivienda para interesarse por un asunto relacionado con una denuncia por malos tratos presentada por la expareja del individuo.</p>
+ </div>
+</section>
+
+<!-- ESCENA 4 -->
+<section class="escena" data-duration="14000">
+ <div class="fondo calle" style="filter:brightness(.55)">
+  <div class="edificio e1"></div>
+  <div class="edificio e2"></div>
+  <div class="edificio e3"></div>
+  <div class="asfalto"></div>
+ </div>
+ <div class="centro">
+  <div class="etiqueta">La violencia irrumpe</div>
+  <h1>El ataque</h1>
+  <div class="linea"></div>
+  <p>El individuo abrió la puerta y disparó con una escopeta contra los agentes.</p>
+  <div class="texto-alerta">UNO DE LOS AGENTES RESULTA<br>GRAVEMENTE HERIDO</div>
+ </div>
+</section>
+
+<!-- ESCENA 5 -->
+<section class="escena" data-duration="16000">
+ <div class="fondo">
+  <div class="techo"></div>
+  <div class="casa"></div>
+  <div class="barrera"></div>
+  <div class="destellos"></div>
+ </div>
+ <div class="inferior">
+  <div class="etiqueta">Dispositivo policial</div>
+  <h1>El atrincheramiento</h1>
+  <p>Después del tiroteo, el individuo se atrincheró en el interior de la vivienda con sus propios padres. La calle quedó acordonada y se desplegó un dispositivo policial.</p>
+ </div>
+</section>
+
+<!-- ESCENA 6 -->
+<section class="escena" data-duration="14000">
+ <div class="fondo">
+  <div class="techo"></div>
+  <div class="casa"></div>
+  <div class="destellos"></div>
+ </div>
+ <div class="inferior">
+  <div class="etiqueta">La tensión aumenta</div>
+  <h1>Nuevos disparos</h1>
+  <p>Durante el dispositivo policial se produjeron nuevos disparos desde la zona de la azotea, según las informaciones y testimonios publicados.</p>
+  <div class="texto-alerta">LA SITUACIÓN SE COMPLICA.<br>NUEVOS DISPAROS DESDE LA AZOTEA.</div>
+ </div>
+</section>
+
+<!-- ESCENA 7 -->
+<section class="escena" data-duration="15000">
+ <div class="fondo">
+  <div class="casa"></div>
+  <div class="destellos" style="opacity:.3"></div>
+ </div>
+ <div class="inferior">
+  <div class="etiqueta">La negociación llega a su fin</div>
+  <h1>El desenlace</h1>
+  <p>Tras varias horas de incertidumbre, tensión y negociación, el individuo finalmente se entregó a las fuerzas policiales. La situación quedó bajo control.</p>
+  <div class="texto-alerta">TRAS VARIAS HORAS DE INCERTIDUMBRE,<br>EL INDIVIDUO SE ENTREGA.</div>
+ </div>
+</section>
+
+<!-- ESCENA 8 -->
+<section class="escena" data-duration="11000">
+ <div class="centro">
+  <h1>8 de diciembre de 2015</h1>
+  <div class="linea"></div>
+  <div class="etiqueta">Montalbán de Córdoba</div>
+  <h1 style="font-size:clamp(20px,2.5vw,44px)">
+   Una jornada que marcó<br>a la localidad.
+  </h1>
+  <div class="etiqueta" style="margin-top:30px">Fin de la reconstrucción</div>
+ </div>
+ <div style="position:absolute;z-index:7;bottom:18%;left:8%;right:8%;font-size:11px;color:#aaa">
+ Reconstrucción audiovisual basada en información periodística.
+ Las escenas, personajes y ambientes son recreaciones gráficas.
+ </div>
+</section>
+
+<div class="grano"></div>
+<div id="subtitulos"></div>
+
+<div class="controles">
+ <button id="reproducir">▶ REPRODUCIR</button>
+ <button id="reiniciar">↺ INICIO</button>
+ <span class="tiempo" id="reloj">00:00 / 01:44</span>
+ <input id="progreso" type="range" min="0" max="1000" value="0">
+ <span class="tiempo">VOL</span>
+ <input id="volumen" type="range" min="0" max="100" value="55">
+</div>
+
+</div>
+
+<script>
+const escenas=[...document.querySelectorAll('.escena')];
+const progreso=document.getElementById('progreso');
+const reloj=document.getElementById('reloj');
+const subtitulos=document.getElementById('subtitulos');
+const boton=document.getElementById('reproducir');
+const volumen=document.getElementById('volumen');
+
+const duraciones=escenas.map(e=>Number(e.dataset.duration));
+const inicios=[];
+let total=0;
+
+duraciones.forEach(d=>{
+ inicios.push(total);
+ total+=d;
+});
+
+const narraciones=[
+"El ocho de diciembre de dos mil quince. Montalbán de Córdoba, en la provincia de Córdoba. Una jornada que alteró la tranquilidad de sus calles.",
+"En la localidad cordobesa de Montalbán, el suceso tuvo lugar en la calle Ancha. A continuación, la reconstrucción se aproxima al escenario de los acontecimientos.",
+"Dos agentes de la Guardia Civil se dirigieron a una vivienda para interesarse por un asunto relacionado con una denuncia por malos tratos presentada por la expareja del individuo.",
+"Al llegar al domicilio y llamar a la puerta, el hombre abrió fuego con una escopeta. Uno de los guardias civiles resultó gravemente herido. La escena se representa sin mostrar sangre ni heridas.",
+"Después del tiroteo, el individuo permaneció atrincherado en la vivienda con sus padres. La zona quedó acordonada y se desplegaron efectivos policiales.",
+"Durante el dispositivo se registraron nuevos disparos. Las informaciones publicadas situaron al individuo en la zona de la azotea.",
+"Tras varias horas de negociación, el individuo se entregó a las fuerzas policiales. La situación quedó bajo control.",
+"El ocho de diciembre de dos mil quince. Montalbán de Córdoba. Una jornada que marcó a la localidad."
+];
+
+let tiempo=0;
+let escenaActual=0;
+let reproduciendo=false;
+let anterior=0;
+let audio=null;
+let master=null;
+let raf=null;
+
+function crearAudio(){
+ if(audio)return;
+ const AC=window.AudioContext||window.webkitAudioContext;
+ if(!AC)return;
+
+ audio=new AC();
+ master=audio.createGain();
+ master.gain.value=.12*volumen.value/55;
+ master.connect(audio.destination);
+
+ // Música ambiental original: drones graves.
+ const o1=audio.createOscillator();
+ const o2=audio.createOscillator();
+ const g=audio.createGain();
+
+ o1.type='sine';
+ o2.type='triangle';
+ o1.frequency.value=45;
+ o2.frequency.value=48;
+ g.gain.value=.23;
+
+ o1.connect(g);
+ o2.connect(g);
+ g.connect(master);
+ o1.start();
+ o2.start();
+
+ // Viento ambiental mediante ruido filtrado.
+ const buffer=audio.createBuffer(
+  1,audio.sampleRate*3,audio.sampleRate
+ );
+ const datos=buffer.getChannelData(0);
+
+ for(let i=0;i<datos.length;i++){
+  datos[i]=(Math.random()*2-1)*.3;
+ }
+
+ const fuente=audio.createBufferSource();
+ const filtro=audio.createBiquadFilter();
+ const ganancia=audio.createGain();
+
+ fuente.buffer=buffer;
+ fuente.loop=true;
+ filtro.type='lowpass';
+ filtro.frequency.value=300;
+ ganancia.gain.value=.10;
+
+ fuente.connect(filtro);
+ filtro.connect(ganancia);
+ ganancia.connect(master);
+ fuente.start();
+
+ window.osc={o1,o2};
+ window.wind=ganancia;
+}
+
+function ambiente(i){
+ if(!audio)return;
+
+ const tonos=[42,44,46,39,43,48,40,34];
+ const intensidad=[.035,.045,.055,.085,.095,.075,.04,.012];
+
+ master.gain.setTargetAtTime(
+  intensidad[i]*volumen.value/55,
+  audio.currentTime,1.5
+ );
+
+ osc.o1.frequency.setTargetAtTime(
+  tonos[i],audio.currentTime,2
+ );
+
+ osc.o2.frequency.setTargetAtTime(
+  tonos[i]+7,audio.currentTime,2
+ );
+
+ wind.gain.setTargetAtTime(
+  i===7?0:.10,audio.currentTime,2
+ );
+}
+
+function hablar(i){
+ if(!('speechSynthesis' in window))return;
+
+ speechSynthesis.cancel();
+
+ if(i===7)return;
+
+ const voz=new SpeechSynthesisUtterance(narraciones[i]);
+ voz.lang='es-ES';
+ voz.rate=.88;
+ voz.pitch=.88;
+ voz.volume=volumen.value/100;
+
+ const voces=speechSynthesis.getVoices();
+ const espanola=
+  voces.find(v=>v.lang==='es-ES')||
+  voces.find(v=>v.lang.startsWith('es'));
+
+ if(espanola)voz.voice=espanola;
+
+ speechSynthesis.speak(voz);
+ subtitulos.textContent=narraciones[i];
+}
+
+function formato(ms){
+ const s=Math.floor(ms/1000);
+ return String(Math.floor(s/60)).padStart(2,'0')+
+ ':'+String(s%60).padStart(2,'0');
+}
+
+function cambiarEscena(i){
+ escenaActual=i;
+
+ escenas.forEach((e,n)=>{
+  e.classList.toggle('activa',n===i);
+ });
+
+ document.getElementById('cabecera').textContent=
+  escenas[i].dataset.title||
+  'RECONSTRUCCIÓN DOCUMENTAL';
+
+ subtitulos.textContent='';
+}
+
+function actualizar(ms,anunciar=false){
+ tiempo=Math.max(0,Math.min(total,ms));
+
+ let i=duraciones.findIndex((d,n)=>
+  tiempo>=inicios[n]&&tiempo<inicios[n]+d
+ );
+
+ if(i<0)i=escenas.length-1;
+
+ if(i!==escenaActual){
+  cambiarEscena(i);
+  ambiente(i);
+  if(anunciar&&reproduciendo)hablar(i);
+ }
+
+ progreso.value=tiempo/total*1000;
+ reloj.textContent=formato(tiempo)+' / '+formato(total);
+}
+
+function avanzar(t){
+ if(!reproduciendo)return;
+
+ if(!anterior)anterior=t;
+
+ tiempo+=t-anterior;
+ anterior=t;
+
+ if(tiempo>=total){
+  tiempo=total;
+  reproduciendo=false;
+  boton.textContent='▶ REPRODUCIR';
+  speechSynthesis.cancel();
+ }
+
+ actualizar(tiempo,true);
+
+ if(reproduciendo){
+  raf=requestAnimationFrame(avanzar);
+ }
+}
+
+function iniciar(){
+ crearAudio();
+
+ if(audio&&audio.state==='suspended'){
+  audio.resume();
+ }
+
+ if(tiempo>=total)tiempo=0;
+
+ reproduciendo=true;
+ boton.textContent='Ⅱ PAUSAR';
+ anterior=0;
+
+ const i=duraciones.findIndex((d,n)=>
+  tiempo>=inicios[n]&&tiempo<inicios[n]+d
+ );
+
+ if(i>=0){
+  cambiarEscena(i);
+  ambiente(i);
+  hablar(i);
+ }
+
+ raf=requestAnimationFrame(avanzar);
+}
+
+boton.addEventListener('click',()=>{
+ if(reproduciendo){
+  reproduciendo=false;
+  cancelAnimationFrame(raf);
+  boton.textContent='▶ CONTINUAR';
+  speechSynthesis.pause();
+ }else if(speechSynthesis.paused){
+  speechSynthesis.resume();
+  reproduciendo=true;
+  boton.textContent='Ⅱ PAUSAR';
+  anterior=0;
+  raf=requestAnimationFrame(avanzar);
+ }else{
+  iniciar();
+ }
+});
+
+document.getElementById('reiniciar')
+.addEventListener('click',()=>{
+ reproduciendo=false;
+ cancelAnimationFrame(raf);
+ speechSynthesis.cancel();
+ tiempo=0;
+ cambiarEscena(0);
+ ambiente(0);
+ actualizar(0);
+ boton.textContent='▶ REPRODUCIR';
+});
+
+progreso.addEventListener('input',()=>{
+ reproduciendo=false;
+ cancelAnimationFrame(raf);
+ speechSynthesis.cancel();
+
+ tiempo=progreso.value/1000*total;
+ actualizar(tiempo);
+ boton.textContent='▶ CONTINUAR';
+});
+
+volumen.addEventListener('input',()=>{
+ if(master){
+  master.gain.setTargetAtTime(
+   volumen.value/100*.13,audio.currentTime,.1
+  );
+ }
+});
+
+cambiarEscena(0);
+actualizar(0);
+</script>
+</body>
+</html>
